@@ -12,22 +12,21 @@ import java.util.regex.Pattern;
 
 
     public Profile getDataFromFile(File file) {
-        String profileData = "";
+        StringBuilder profileData = new StringBuilder((int)file.length());
         String [] userData = new String[4];
         try(BufferedReader bufferedReader = new BufferedReader(new java.io.FileReader(file))) {
             String line = "";
             while((line = bufferedReader.readLine()) != null){
-                profileData += line+"\n";
+                profileData.append(line.replace(" ","")+"\n");
             }
-            profileData = profileData.replace(" ","");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (FileNotExistException e) {
+            System.out.println(e.getMessage());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
 
         Pattern pattern = Pattern.compile("(?<=:)(\\s*)(.+)");
-        Matcher matcher = pattern.matcher(profileData);
+        Matcher matcher = pattern.matcher(profileData.toString());
 
         int i = 0;
         while (matcher.find()) {
@@ -40,6 +39,7 @@ import java.util.regex.Pattern;
         profile.setName(userData[0]);
         profile.setEmail(userData[2]);
         profile.setPhone(Long.valueOf(userData[3]));
+
         return profile;
     }
 }
