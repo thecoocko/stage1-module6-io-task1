@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
  public class FileReader {
-
-
+     private static final Logger logger = Logger.getLogger(FileReader.class.getName());
     public Profile getDataFromFile(File file) {
         StringBuilder profileData = new StringBuilder((int)file.length());
         String [] userData = new String[4];
@@ -20,9 +20,9 @@ import java.util.regex.Pattern;
                 profileData.append(line.replace(" ","")+"\n");
             }
         } catch (FileNotFoundException e) {
-            System.err.println(e.getMessage());
+            logger.severe(e.getMessage());
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            logger.severe(e.getMessage());
         }
 
         Pattern pattern = Pattern.compile("(?<=:)(\\s*)(.+)");
@@ -42,4 +42,6 @@ import java.util.regex.Pattern;
 
         return profile;
     }
-}
+
+
+ }
