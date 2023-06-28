@@ -19,10 +19,10 @@ import java.util.regex.Pattern;
             while((line = bufferedReader.readLine()) != null){
                 profileData.append(line.replace(" ","")+"\n");
             }
-        } catch (FileNotExistException e) {
-            System.out.println(e.getMessage());
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
 
         Pattern pattern = Pattern.compile("(?<=:)(\\s*)(.+)");
